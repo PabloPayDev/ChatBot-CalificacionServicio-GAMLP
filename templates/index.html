@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Hola Mundo con Flask
+        </title>
+        <style>
+            table{
+                width: 80%;
+                border-collapse: collapse;
+                margin: 20px auto;
+            }
+            th, td{
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+            th{
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>
+            Registro de Mensajes!
+        </h1>
+        <table>
+            <tr>
+                <th>Fecha</th>
+                <th>Texto</th>
+            </tr>
+            {% for registro in registros %}
+                <tr>
+                    <td>{{registro.fecha_y_hora}}</td>
+                    <td>{{registro.texto}}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
