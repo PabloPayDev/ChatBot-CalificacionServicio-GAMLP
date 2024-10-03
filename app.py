@@ -36,7 +36,7 @@ def sortByDate(register):
 
 #addMessageLog(json.dumps("TestText"))
 
-TOKEN = ""
+TOKEN = "CHATBOTTOKENTEST"
 
 @app.route('/webhook', methods=['GET','POST'])
 def webhook():
