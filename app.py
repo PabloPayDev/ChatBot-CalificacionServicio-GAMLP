@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fecha_y_hora = db.Column(db.DateTime, default=datetime.utcnow)
+    fecha_y_hora = db.Column(db.DateTime, default=datetime.utcnow())
     texto = db.Column(db.Text)
 
 with app.app_context():
@@ -33,8 +33,6 @@ def addMessageLog(texto):
 
 def sortByDate(register):
     return sorted(register, key=lambda x: x.fecha_y_hora, reverse=True)
-
-#addMessageLog(json.dumps("TestText"))
 
 TOKEN = "CHATBOTTOKENTEST"
 
