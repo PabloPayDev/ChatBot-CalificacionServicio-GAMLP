@@ -11,12 +11,14 @@ db = SQLAlchemy(app)
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fecha_y_hora = db.Column(db.DateTime, default=datetime.utcnow())
+    fecha_y_hora = db.Column(db.DateTime, default=datetime.utcnow)
     texto = db.Column(db.Text)
 
 with app.app_context():
     db.create_all()
 
+def sortByDate(register):
+    return sorted(register, key=lambda x: x.fecha_y_hora, reverse=True)
 
 @app.route('/')
 def index():
@@ -25,14 +27,12 @@ def index():
     return (render_template("index.html", registros = registros_ordenados))
 
 mensajes_log = []
+
 def addMessageLog(texto):
     mensajes_log.append(texto)
     newRegister = Log(texto=texto)
     db.session.add(newRegister)
     db.session.commit()
-
-def sortByDate(register):
-    return sorted(register, key=lambda x: x.fecha_y_hora, reverse=True)
 
 TOKEN = "CHATBOTTOKENTEST"
 
@@ -49,7 +49,7 @@ def verificar_token(req):
     token = req.args.get('hub.verify_token')
     challenge = req.args.get('hub.challenge')
 
-    if(challenge and token==TOKEN):
+    if(challenge and token == TOKEN):
         return challenge
     else:
         return jsonify({'error':'Token Invalido'}),401
