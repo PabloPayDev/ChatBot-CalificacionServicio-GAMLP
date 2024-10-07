@@ -30,7 +30,7 @@ mensajes_log = []
 
 def addMessageLog(texto):
     mensajes_log.append(texto)
-    newRegister = Log(texto=texto)
+    newRegister = Log(texto=json.dumps(texto))
     db.session.add(newRegister)
     db.session.commit()
 
