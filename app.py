@@ -74,14 +74,16 @@ def recibir_mensaje(req):
             messages = objeto_mensaje[0]
             if("type" in messages):
                 tipo = messages["type"]
+                addMessageLog(json.dumps(tipo))
                 if(tipo == "interactive"):
                     return 0
                 if("text" in messages):
                     text = messages["text"]["body"]
                     numero = messages["from"]
 
-                    addMessageLog(json.dumps(text))
-                    addMessageLog(json.dumps(numero))
+                    addMessageLog(json.dumps(messages))
+
+                    enviar_mensajes_whatsapp(text, numero)
 
         return jsonify({'message':'EVENT RECEIVED'})
     except Exception as e:
@@ -98,6 +100,40 @@ def enviar_mensajes_whatsapp(texto, numero):
             "text": {
                 "preview_url": False,
                 "body": "Hola, Bienvenido"
+            }
+        }
+    elif( "boton" in texto):
+        data = {
+            "messaging_product": "whatsapp",    
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "body":{
+                    "text": "Confirmar tu registro?"
+                },
+                "footer":{
+                    "text": "Selecciona una de las opciones"
+                },
+                "action":{
+                    "buttons":[
+                        {
+                            "type": "reply",
+                            "reply":{
+                                "id": "btnOp1",
+                                "title": "Si"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply":{
+                                "id": "btnOp2",
+                                "title": "No"
+                            }
+                        }
+                    ]                    
+                }                
             }
         }
     else:
@@ -128,6 +164,6 @@ def enviar_mensajes_whatsapp(texto, numero):
         addMessageLog(json.dumps(e))
     finally:
         connection.close()
-        
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80,debug=True)
