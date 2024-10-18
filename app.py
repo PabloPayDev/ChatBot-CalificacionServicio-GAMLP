@@ -118,10 +118,12 @@ def recibir_mensaje(req):
         if(objeto_mensaje):
             messages = objeto_mensaje[0]
             if("type" in messages):
+                print("IN RecMen")
                 tipo = messages["type"]
                 addMessageLog(json.dumps(messages))
 
                 if(tipo == "interactive"):
+                    print("IN inter")
                     tipo_interactivo = messages["interactive"]["type"]
                     if(tipo_interactivo == "button_reply"):
                         text = messages["interactive"]["button_reply"]["id"]
@@ -129,6 +131,7 @@ def recibir_mensaje(req):
                         enviar_mensajes_whatsapp(text, numero)
 
                 if("text" in messages):
+                    print("IN text")
                     text = messages["text"]["body"]
                     numero = messages["from"]
 
@@ -145,7 +148,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     print(texto)
     print(type(texto))
 
-    if(("hola" in texto)and(flowStep==-1)):
+    if(("hola1" in texto)or(flowStep==-1)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -157,7 +160,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Hola, Bienvenido"
             }
         }
-    elif(("hola" in texto)and(flowStep==0)):
+    elif(("hola2" in texto)or(flowStep==0)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
