@@ -104,6 +104,7 @@ def verificar_token(req):
         return jsonify({'error':'Token Invalido'}),401
     
 flowStep = 0
+print(flowStep)
 
 def recibir_mensaje(req):
     try:
