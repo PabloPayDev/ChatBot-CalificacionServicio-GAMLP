@@ -124,7 +124,6 @@ def recibir_mensaje(req):
                 addMessageLog(json.dumps(messages))
 
                 if(tipo == "interactive"):
-                    print("IN inter")
                     tipo_interactivo = messages["interactive"]["type"]
                     if(tipo_interactivo == "button_reply"):
                         text = messages["interactive"]["button_reply"]["id"]
@@ -132,7 +131,6 @@ def recibir_mensaje(req):
                         enviar_mensajes_whatsapp(text, numero)
 
                 if("text" in messages):
-                    app.logger.debug('IN Messa')
                     text = messages["text"]["body"]
                     numero = messages["from"]
 
@@ -245,6 +243,9 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     else:
+        app.logger.debug(texto)
+        app.logger.debug((texto in chatbotFlowMessages[0]))
+        app.logger.debug(flowStep)
         data = {
             "messaging_product": "whatsapp",    
             "recipient_type": "individual",
