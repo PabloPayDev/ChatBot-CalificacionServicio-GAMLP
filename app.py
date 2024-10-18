@@ -16,26 +16,59 @@ db = SQLAlchemy(app)
 flow1 = [
     "Hola soy tu asistente virtual, porfavor responde a las siguientes pregutnas para calificar tu atencion en plataforma siendo un 1 muy malo y 5 muy bueno",
     "Presione siguiente.",
-    "1️⃣. Siguiente"
+    [
+        "btnOpt1",
+        "1️⃣. Siguiente"
+    ]
 ]
 flow2 = [
     "Como fue tu experiencia general en la atencion?",
      "Selecciona una de las opciones",
-    "1️⃣. Muy mala",
-    "2️⃣. Mala",
-    "3️⃣. Media",
-    "4️⃣. Buena",
-    "5️⃣. Muy buena"
+    [
+        "btnOpt1",
+        "1️⃣. Muy mala"
+    ],
+    [
+        "btnOpt2",
+        "2️⃣. Mala"
+    ],
+    [
+        "btnOpt3",
+        "3️⃣. Media"
+    ],
+    [
+        "btnOpt4",
+        "4️⃣. Buena"
+    ],
+    [
+        "btnOpt5",
+        "5️⃣. Muy buena"
+    ]
 ]
 
 flow3 = [
     "El tiempo de espera fue:",
      "Selecciona una de las opciones",
-    "1️⃣. Muy lento.",
-    "2️⃣. Lento",
-    "3️⃣. Medio",
-    "4️⃣. Rapido",
-    "5️⃣. Muy rapido"
+    [
+        "btnOpt1",
+        "1️⃣. Muy lento."
+    ],
+    [
+        "btnOpt2",
+        "2️⃣. Lento"
+    ],
+    [
+        "btnOpt3",
+        "3️⃣. Medio"
+    ],
+    [
+        "btnOpt4",
+        "4️⃣. Rapido"
+    ],
+    [
+        "btnOpt5",
+        "5️⃣. Muy rapido"
+    ]
 ]
 
 flow4 = [
@@ -44,7 +77,10 @@ flow4 = [
 
 flow5 = [
     "Gracias por su retroalimentacion",
-    "1️⃣. Finalizar"
+    [
+        "btnOpt1",
+        "1️⃣. Finalizar"
+    ]
 ]
 
 flowInvalid = [
@@ -59,6 +95,18 @@ chatbotFlowMessages = [
     flowInvalid
 ]
 # ======= ======= ======= ======= =======
+def check_text_in_flow(text, chatbotFlowMessages, index):
+    if index < 0 or index >= len(chatbotFlowMessages):
+        return False
+    
+    flow = chatbotFlowMessages[index]
+
+    for item in flow[2:]:
+        if text in item:
+            return True
+    
+    return False
+
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -178,15 +226,15 @@ def enviar_mensajes_whatsapp(texto, numero):
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOpt1",
-                                "title": chatbotFlowMessages[0][2]
+                                "id": chatbotFlowMessages[0][2][0],
+                                "title": chatbotFlowMessages[0][2][1]
                             }
                         }
                     ]                    
                 }                
             }
         }
-    elif((texto in chatbotFlowMessages[0])and(flowStep==1)):
+    elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
@@ -206,36 +254,36 @@ def enviar_mensajes_whatsapp(texto, numero):
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOpt1",
-                                "title": chatbotFlowMessages[1][2]
+                                "id": chatbotFlowMessages[1][2][0],
+                                "title": chatbotFlowMessages[1][2][1]
                             }
                         },
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOpt2",
-                                "title": chatbotFlowMessages[1][3]
+                                "id": chatbotFlowMessages[1][3][0],
+                                "title": chatbotFlowMessages[1][3][1]
                             }
                         },
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOpt2",
-                                "title": chatbotFlowMessages[1][4]
+                                "id": chatbotFlowMessages[1][4][0],
+                                "title": chatbotFlowMessages[1][4][1]
                             }
                         },
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOpt2",
-                                "title": chatbotFlowMessages[1][5]
+                                "id": chatbotFlowMessages[1][5][0],
+                                "title": chatbotFlowMessages[1][5][1]
                             }
                         },
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOpt2",
-                                "title": chatbotFlowMessages[1][6]
+                                "id": chatbotFlowMessages[1][6][0],
+                                "title": chatbotFlowMessages[1][6][1]
                             }
                         }
                     ]                    
@@ -243,9 +291,6 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     else:
-        app.logger.debug(texto)
-        app.logger.debug((texto in chatbotFlowMessages[0]))
-        app.logger.debug(flowStep)
         data = {
             "messaging_product": "whatsapp",    
             "recipient_type": "individual",
