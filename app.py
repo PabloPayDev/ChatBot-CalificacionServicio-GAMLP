@@ -147,11 +147,8 @@ def recibir_mensaje(req):
 def enviar_mensajes_whatsapp(texto, numero):
     global flowStep    
     texto = texto.lower()
-    app.logger.debug(texto)
-    app.logger.debug(type(texto))
-    app.logger.debug(flowStep)
 
-    if(("hola1" in texto)):
+    if(("holaSimpleTest" in texto)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -163,7 +160,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Hola, Bienvenido"
             }
         }
-    elif(("hola2" in texto)):
+    elif(("hola" in texto)and(flowStep==0)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -191,7 +188,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }                
             }
         }
-    elif((texto in chatbotFlowMessages[0])):
+    elif((texto in chatbotFlowMessages[0])and(flowStep==1)):
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
@@ -201,25 +198,46 @@ def enviar_mensajes_whatsapp(texto, numero):
             "interactive": {
                 "type": "button",
                 "body":{
-                    "text": "Confirmar tu registro?"
+                    "text": chatbotFlowMessages[1][0]
                 },
                 "footer":{
-                    "text": "Selecciona una de las opciones"
+                    "text": chatbotFlowMessages[1][1]
                 },
                 "action":{
                     "buttons":[
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOp1",
-                                "title": "Si"
+                                "id": "btnOpt1",
+                                "title": chatbotFlowMessages[1][2]
                             }
                         },
                         {
                             "type": "reply",
                             "reply":{
-                                "id": "btnOp2",
-                                "title": "No"
+                                "id": "btnOpt2",
+                                "title": chatbotFlowMessages[1][3]
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply":{
+                                "id": "btnOpt2",
+                                "title": chatbotFlowMessages[1][4]
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply":{
+                                "id": "btnOpt2",
+                                "title": chatbotFlowMessages[1][5]
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply":{
+                                "id": "btnOpt2",
+                                "title": chatbotFlowMessages[1][6]
                             }
                         }
                     ]                    
