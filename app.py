@@ -190,34 +190,6 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }                
             }
         }
-    elif(("hola3" in texto)and(flowStep==1)):
-        flowStep = 1
-        data = {
-            "messaging_product": "whatsapp",    
-            "recipient_type": "individual",
-            "to": numero,
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body":{
-                    "text": chatbotFlowMessages[0][0]
-                },
-                "footer":{
-                    "text": chatbotFlowMessages[0][1]
-                },
-                "action":{
-                    "buttons":[
-                        {
-                            "type": "reply",
-                            "reply":{
-                                "id": "btnOpt1",
-                                "title": chatbotFlowMessages[0][2]
-                            }
-                        }
-                    ]                    
-                }                
-            }
-        }
     elif((texto in chatbotFlowMessages[0])):
         flowStep = 2
         data = {
