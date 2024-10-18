@@ -291,6 +291,9 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     else:
+        app.logger.debug(texto)
+        app.logger.debug((check_text_in_flow(texto, chatbotFlowMessages, 0)))
+        app.logger.debug(flowStep)
         data = {
             "messaging_product": "whatsapp",    
             "recipient_type": "individual",
