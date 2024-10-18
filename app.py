@@ -10,11 +10,53 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///metapython.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-chatbotFlowMessages = [
+# ======= ======= TEXT TO USE ======= =======
+flow1 = [
     "Hola soy tu asistente virtual, porfavor responde a las siguientes pregutnas para calificar tu atencion en plataforma siendo un 1 muy malo y 5 muy bueno",
-    "Como fue tu experiencia general en la atencion? \n \n1️⃣. Muy mala. \n2️⃣. Mala. \n3️⃣. Media. \n4️⃣. Buena. \n5️⃣. Muy buena.",
-    "Default"
+     "Selecciona una de las opciones",
+    "1️⃣. Siguiente"
 ]
+flow2 = [
+    "Como fue tu experiencia general en la atencion?",
+     "Selecciona una de las opciones",
+    "1️⃣. Muy mala",
+    "2️⃣. Mala",
+    "3️⃣. Media",
+    "4️⃣. Buena",
+    "5️⃣. Muy buena"
+]
+
+flow3 = [
+    "El tiempo de espera fue:",
+     "Selecciona una de las opciones",
+    "1️⃣. Muy lento.",
+    "2️⃣. Lento",
+    "3️⃣. Medio",
+    "4️⃣. Rapido",
+    "5️⃣. Muy rapido"
+]
+
+flow4 = [
+    "Desea agregar una nota sobre su experiencia? \n\n Ej: Buena actitud del operador de plataforma."
+]
+
+flow5 = [
+    "Gracias por su retroalimentacion",
+    "1️⃣. Finalizar"
+]
+
+flowInvalid = [
+    "Su respuesta no es valida, porfavor ingrese lo que se especifica."
+]
+chatbotFlowMessages = [
+    flow1,
+    flow2,
+    flow3,
+    flow4,
+    flow5,
+    flowInvalid
+]
+# ======= ======= ======= ======= =======
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -75,8 +117,14 @@ def recibir_mensaje(req):
             if("type" in messages):
                 tipo = messages["type"]
                 addMessageLog(json.dumps(tipo))
+
                 if(tipo == "interactive"):
-                    return 0
+                    tipo_interactivo = messages["interactive"]["type"]
+                    if(tipo_interactivo == "button_reply"):
+                        text = messages["interactive"]["button_reply"]["id"]
+                        numero = messages["from"]
+                        enviar_mensajes_whatsapp(text, numero)
+
                 if("text" in messages):
                     text = messages["text"]["body"]
                     numero = messages["from"]
@@ -148,7 +196,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     data = json.dumps(data)
-    token = "EAAWXJp8ZCZCyABO98FcF8mcjDtQh5IWfSbl0JrRgQMeXuYXxTOeMkHKk3pNcSjSP80ek6XKlISC7gNR2lWZClZAz78ySsT6al9OnfyZBsxZCgJzebEyweSQDs643HMbJ7Epifm9D1MuXtDeK3v12kaxsKausuU8zQ8OA4oD9iZA62Equb8VGtdu1WiEYFg1RXI6SyHYGviupG0zzOWrvmDNXLZBG"
+    token = "EAAWXJp8ZCZCyABO7X61k5gRAszumdx4zELWrpiJnKTiBhsR8NfWH05o8ZB6eZCuR8nDzEHVPYgAT4QKdoabQu23W1Wf0SLIZA2FphCJcpUoSrcfTpUtHj8Ngq1qScFGDrwZARdQOr0FUvdZAyEQbHxWdCFEmvJOt8xePB5moKp5dZCz1DGFsiG5hu3Uh9kY8QP1KLKr4biLc8zo1EYZAxFbBoyDub"
     headers = {
         "Contect-Type": "application/json",
         "Authorization": "Bearer "+token
