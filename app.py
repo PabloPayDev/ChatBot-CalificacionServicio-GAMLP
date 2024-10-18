@@ -198,7 +198,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     data = json.dumps(data)
     token = "EAAWXJp8ZCZCyABO7X61k5gRAszumdx4zELWrpiJnKTiBhsR8NfWH05o8ZB6eZCuR8nDzEHVPYgAT4QKdoabQu23W1Wf0SLIZA2FphCJcpUoSrcfTpUtHj8Ngq1qScFGDrwZARdQOr0FUvdZAyEQbHxWdCFEmvJOt8xePB5moKp5dZCz1DGFsiG5hu3Uh9kY8QP1KLKr4biLc8zo1EYZAxFbBoyDub"
     headers = {
-        "Contect-Type": "application/json",
+        "Content-Type" : "application/json",
         "Authorization": "Bearer "+token
     }
 
