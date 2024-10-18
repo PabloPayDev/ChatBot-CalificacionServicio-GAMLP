@@ -104,7 +104,7 @@ def verificar_token(req):
         return challenge
     else:
         return jsonify({'error':'Token Invalido'}),401
-    
+
 flowStep = 0
 
 def recibir_mensaje(req):
@@ -145,6 +145,7 @@ def recibir_mensaje(req):
         return jsonify({'message':'EVENT RECEIVED'})
 
 def enviar_mensajes_whatsapp(texto, numero):
+    global flowStep    
     texto = texto.lower()
     app.logger.debug(texto)
     app.logger.debug(type(texto))
