@@ -3,11 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import http.client
 import json
+import logging
 
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///metapython.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+logging.basicConfig(level=logging.DEBUG)
 db = SQLAlchemy(app)
 
 # ======= ======= TEXT TO USE ======= =======
@@ -104,7 +106,6 @@ def verificar_token(req):
         return jsonify({'error':'Token Invalido'}),401
     
 flowStep = 0
-print(flowStep)
 
 def recibir_mensaje(req):
     try:
@@ -118,7 +119,7 @@ def recibir_mensaje(req):
         if(objeto_mensaje):
             messages = objeto_mensaje[0]
             if("type" in messages):
-                print("IN RecMen")
+                app.logger.debug('IN RecMen')
                 tipo = messages["type"]
                 addMessageLog(json.dumps(messages))
 
@@ -131,7 +132,7 @@ def recibir_mensaje(req):
                         enviar_mensajes_whatsapp(text, numero)
 
                 if("text" in messages):
-                    print("IN text")
+                    app.logger.debug('IN Messa')
                     text = messages["text"]["body"]
                     numero = messages["from"]
 
@@ -145,10 +146,10 @@ def recibir_mensaje(req):
 
 def enviar_mensajes_whatsapp(texto, numero):
     texto = texto.lower()
-    print(texto)
-    print(type(texto))
+    app.logger.debug(texto)
+    app.logger.debug(type(texto))
 
-    if(("hola1" in texto)or(flowStep==-1)):
+    if(("hola1" in texto)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -160,7 +161,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Hola, Bienvenido"
             }
         }
-    elif(("hola2" in texto)or(flowStep==0)):
+    elif(("hola2" in texto)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -188,7 +189,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }                
             }
         }
-    elif((texto in chatbotFlowMessages[0])and(flowStep==1)):
+    elif((texto in chatbotFlowMessages[0])):
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
