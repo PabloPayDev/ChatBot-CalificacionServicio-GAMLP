@@ -191,6 +191,7 @@ def recibir_mensaje(req):
         return jsonify({'message':'EVENT RECEIVED'})
 
 def enviar_mensajes_whatsapp(texto, numero):
+    global chatbotFlowMessages    
     global flowStep    
     texto = texto.lower()
 
