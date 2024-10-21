@@ -255,16 +255,16 @@ def enviar_mensajes_whatsapp(texto, numero):
             "interactive":{
                 "type" : "list",
                 "body": {
-                    "text": "Selecciona Alguna Opción"
+                    "text": chatbotFlowMessages[1][0]
                 },
                 "footer": {
-                    "text": "Selecciona una de las opciones para poder ayudarte"
+                    "text": chatbotFlowMessages[1][2]
                 },
                 "action":{
-                    "button":"Ver Opciones",
+                    "button":chatbotFlowMessages[1][1],
                     "sections":[
                         {
-                            "title":"Compra y Venta",
+                            "title":chatbotFlowMessages[1][2],
                             "rows":[
                                 {
                                     "id":"btncompra",
@@ -296,6 +296,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }
             }
         }
+        
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
         app.logger.debug("In Step 1 List")
         flowStep = 2
