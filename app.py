@@ -264,7 +264,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "button": chatbotFlowMessages[1][1],
                     "sections":[
                         {
-                            "title": "titulo",
+                            "title": "",
                             "rows":[
                                 {
                                     "id": chatbotFlowMessages[1][3][0],
@@ -302,7 +302,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "button": chatbotFlowMessages[1][1],
                     "sections":[
                         {
-                            "title": chatbotFlowMessages[1][2],
+                            "title": "",
                             "rows": [
                                 {
                                     "id": chatbotFlowMessages[1][3][0],
