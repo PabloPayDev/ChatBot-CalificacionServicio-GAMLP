@@ -291,7 +291,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                                     "id": chatbotFlowMessages[1][6][0],
                                     "title": chatbotFlowMessages[1][6][1],
                                     "descripcion": "Desc default"
-                                },
+                                }
                             ]
                         }
                     ]                
