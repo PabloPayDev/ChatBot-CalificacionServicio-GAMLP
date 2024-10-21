@@ -258,13 +258,13 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "text": chatbotFlowMessages[1][0]
                 },
                 "footer": {
-                    "text": chatbotFlowMessages[1][2]
+                    "text": "titulo"
                 },
                 "action":{
-                    "button":chatbotFlowMessages[1][1],
+                    "button": "titulo",
                     "sections":[
                         {
-                            "title":chatbotFlowMessages[1][2],
+                            "title": "titulo",
                             "rows":[
                                 {
                                     "id":"btncompra",
