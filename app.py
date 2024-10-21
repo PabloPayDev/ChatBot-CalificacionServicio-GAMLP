@@ -247,6 +247,57 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
         
+    elif "lista" in texto:
+        data ={
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "type": "interactive",
+            "interactive":{
+                "type" : "list",
+                "body": {
+                    "text": chatbotFlowMessages[1][0]
+                },
+                "footer": {
+                    "text": chatbotFlowMessages[1][2]
+                },
+                "action":{
+                    "button": chatbotFlowMessages[1][1],
+                    "sections":[
+                        {
+                            "title": "",
+                            "rows":[
+                                {
+                                    "id": chatbotFlowMessages[1][3][0],
+                                    "title" : chatbotFlowMessages[1][3][1],
+                                    "description": "Compra los mejores articulos de tecnologia"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][4][0],
+                                    "title" : chatbotFlowMessages[1][4][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][5][0],
+                                    "title" : chatbotFlowMessages[1][5][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][6][0],
+                                    "title" : chatbotFlowMessages[1][6][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][7][0],
+                                    "title" : chatbotFlowMessages[1][7][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+        
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
         app.logger.debug("In Step 1 List")
         flowStep = 2
