@@ -193,6 +193,11 @@ def recibir_mensaje(req):
 def enviar_mensajes_whatsapp(texto, numero):
     global chatbotFlowMessages    
     global flowStep
+    
+    app.logger.debug(texto)
+    app.logger.debug((check_text_in_flow(texto, chatbotFlowMessages, 0)))
+    app.logger.debug(flowStep)
+
 
     if(("holaSimpleTest") in (texto.lower())):
         flowStep = 1
@@ -235,6 +240,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
+        app.logger.debug("In Step 1")
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
