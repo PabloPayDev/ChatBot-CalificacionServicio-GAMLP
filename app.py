@@ -246,6 +246,56 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }                
             }
         }
+        
+    elif "lista" in texto:
+        data ={
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "type": "interactive",
+            "interactive":{
+                "type" : "list",
+                "body": {
+                    "text": "Selecciona Alguna Opción"
+                },
+                "footer": {
+                    "text": "Selecciona una de las opciones para poder ayudarte"
+                },
+                "action":{
+                    "button":"Ver Opciones",
+                    "sections":[
+                        {
+                            "title":"Compra y Venta",
+                            "rows":[
+                                {
+                                    "id":"btncompra",
+                                    "title" : "Comprar",
+                                    "description": "Compra los mejores articulos de tecnologia"
+                                },
+                                {
+                                    "id":"btnvender",
+                                    "title" : "Vender",
+                                    "description": "Vende lo que ya no estes usando"
+                                }
+                            ]
+                        },{
+                            "title":"Distribución y Entrega",
+                            "rows":[
+                                {
+                                    "id":"btndireccion",
+                                    "title" : "Local",
+                                    "description": "Puedes visitar nuestro local."
+                                },
+                                {
+                                    "id":"btnentrega",
+                                    "title" : "Entrega",
+                                    "description": "La entrega se realiza todos los dias."
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
         app.logger.debug("In Step 1 List")
         flowStep = 2
