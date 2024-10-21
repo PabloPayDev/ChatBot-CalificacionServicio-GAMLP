@@ -267,8 +267,8 @@ def enviar_mensajes_whatsapp(texto, numero):
                             "title": "titulo",
                             "rows":[
                                 {
-                                    "id":"btncompra",
-                                    "title" : "Comprar",
+                                    "id": chatbotFlowMessages[1][3][0],
+                                    "title" : chatbotFlowMessages[1][3][1],
                                     "description": "Compra los mejores articulos de tecnologia"
                                 },
                                 {
