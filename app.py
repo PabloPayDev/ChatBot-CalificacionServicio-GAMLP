@@ -23,6 +23,7 @@ flow1 = [
 ]
 flow2 = [
     "Como fue tu experiencia general en la atencion?",
+     "Ver opciones",
      "Selecciona una de las opciones",
     [
         "btnOpt1",
@@ -48,7 +49,8 @@ flow2 = [
 
 flow3 = [
     "El tiempo de espera fue:",
-     "Selecciona una de las opciones",
+    "Ver opciones",
+    "Selecciona una de las opciones",
     [
         "btnOpt1",
         "1️⃣. Muy lento."
@@ -177,6 +179,11 @@ def recibir_mensaje(req):
                         text = messages["interactive"]["button_reply"]["id"]
                         numero = messages["from"]
                         enviar_mensajes_whatsapp(text, numero)
+                    if(tipo_interactivo == "list_reply"):
+                        text = messages["interactive"]["list_reply"]["id"]
+                        numero = messages["from"]
+                        enviar_mensajes_whatsapp(text, numero)
+
 
                 if("text" in messages):
                     text = messages["text"]["body"]
@@ -240,6 +247,58 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
+        app.logger.debug("In Step 1")
+        flowStep = 2
+        data = {
+            "messaging_product": "whatsapp",    
+            "to": numero,
+            "type": "interactive",
+            "interactive": {
+                "type": "list",
+                "body":{
+                    "text": chatbotFlowMessages[1][0]
+                },
+                "footer":{
+                    "text": chatbotFlowMessages[1][2]
+                },
+                "action":{
+                    "buttons": chatbotFlowMessages[1][1],
+                    "sections":[
+                        {
+                            "title": chatbotFlowMessages[1][2],
+                            "rows": [
+                                {
+                                    "id": chatbotFlowMessages[1][2][0],
+                                    "title": chatbotFlowMessages[1][2][1],
+                                    "descripcion": "Desc default"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][3][0],
+                                    "title": chatbotFlowMessages[1][3][1],
+                                    "descripcion": "Desc default"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][4][0],
+                                    "title": chatbotFlowMessages[1][4][1],
+                                    "descripcion": "Desc default"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][5][0],
+                                    "title": chatbotFlowMessages[1][5][1],
+                                    "descripcion": "Desc default"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][6][0],
+                                    "title": chatbotFlowMessages[1][6][1],
+                                    "descripcion": "Desc default"
+                                },
+                            ]
+                        }
+                    ]                
+                }                
+            }
+        }
+    elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==2)):
         app.logger.debug("In Step 1")
         flowStep = 2
         data = {
