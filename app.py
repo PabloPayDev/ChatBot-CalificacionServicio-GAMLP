@@ -258,7 +258,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "text": chatbotFlowMessages[1][0]
                 },
                 "footer": {
-                    "text": "titulo"
+                    "text": chatbotFlowMessages[1][2]
                 },
                 "action":{
                     "button": "titulo",
