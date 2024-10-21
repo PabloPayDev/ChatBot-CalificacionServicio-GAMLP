@@ -264,7 +264,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "button": chatbotFlowMessages[1][1],
                     "sections":[
                         {
-                            "title": "titulo",
+                            "title": chatbotFlowMessages[1][2],
                             "rows":[
                                 {
                                     "id":"btncompra",
