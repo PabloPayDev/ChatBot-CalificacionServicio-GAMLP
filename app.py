@@ -200,11 +200,6 @@ def recibir_mensaje(req):
 def enviar_mensajes_whatsapp(texto, numero):
     global chatbotFlowMessages    
     global flowStep
-    
-    app.logger.debug(texto)
-    app.logger.debug((check_text_in_flow(texto, chatbotFlowMessages, 0)))
-    app.logger.debug(flowStep)
-
 
     if(("holaSimpleTest") in (texto.lower())):
         flowStep = 1
@@ -247,8 +242,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
         
-    elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
-        app.logger.debug("In Step 1 List")
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==1)):
         flowStep = 2
         data ={
             "messaging_product": "whatsapp",
@@ -299,6 +293,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }
             }
         }
+
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==2)):
         app.logger.debug("In Step 1")
         flowStep = 2
@@ -342,6 +337,59 @@ def enviar_mensajes_whatsapp(texto, numero):
                 }                
             }
         }
+        
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==2)):
+        flowStep = 3
+        data ={
+            "messaging_product": "whatsapp",
+            "to": numero,
+            "type": "interactive",
+            "interactive":{
+                "type" : "list",
+                "body": {
+                    "text": chatbotFlowMessages[2][0]
+                },
+                "footer": {
+                    "text": chatbotFlowMessages[2][2]
+                },
+                "action":{
+                    "button": chatbotFlowMessages[2][1],
+                    "sections":[
+                        {
+                            "title": "",
+                            "rows":[
+                                {
+                                    "id": chatbotFlowMessages[2][3][0],
+                                    "title" : chatbotFlowMessages[2][3][1],
+                                    "description": "Compra los mejores articulos de tecnologia"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[2][4][0],
+                                    "title" : chatbotFlowMessages[2][4][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[2][5][0],
+                                    "title" : chatbotFlowMessages[2][5][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[2][6][0],
+                                    "title" : chatbotFlowMessages[2][6][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[2][7][0],
+                                    "title" : chatbotFlowMessages[2][7][1],
+                                    "description": "Vende lo que ya no estes usando"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+
     else:
         app.logger.debug(texto)
         app.logger.debug((check_text_in_flow(texto, chatbotFlowMessages, 0)))
