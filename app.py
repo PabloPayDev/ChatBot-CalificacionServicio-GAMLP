@@ -247,57 +247,6 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
         
-    elif "lista" in texto:
-        data ={
-            "messaging_product": "whatsapp",
-            "to": numero,
-            "type": "interactive",
-            "interactive":{
-                "type" : "list",
-                "body": {
-                    "text": chatbotFlowMessages[1][0]
-                },
-                "footer": {
-                    "text": chatbotFlowMessages[1][2]
-                },
-                "action":{
-                    "button": chatbotFlowMessages[1][1],
-                    "sections":[
-                        {
-                            "title": "",
-                            "rows":[
-                                {
-                                    "id": chatbotFlowMessages[1][3][0],
-                                    "title" : chatbotFlowMessages[1][3][1],
-                                    "description": "Compra los mejores articulos de tecnologia"
-                                },
-                                {
-                                    "id": chatbotFlowMessages[1][4][0],
-                                    "title" : chatbotFlowMessages[1][4][1],
-                                    "description": "Vende lo que ya no estes usando"
-                                },
-                                {
-                                    "id": chatbotFlowMessages[1][5][0],
-                                    "title" : chatbotFlowMessages[1][5][1],
-                                    "description": "Vende lo que ya no estes usando"
-                                },
-                                {
-                                    "id": chatbotFlowMessages[1][6][0],
-                                    "title" : chatbotFlowMessages[1][6][1],
-                                    "description": "Vende lo que ya no estes usando"
-                                },
-                                {
-                                    "id": chatbotFlowMessages[1][7][0],
-                                    "title" : chatbotFlowMessages[1][7][1],
-                                    "description": "Vende lo que ya no estes usando"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
-        
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
         app.logger.debug("In Step 1 List")
         flowStep = 2
@@ -408,7 +357,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     data = json.dumps(data)
-    token = "EAAWXJp8ZCZCyABOzUocEuJg4jnI4GD5PmSIZAz82FkSGEKW7c5g3Vg8Kc9qicq6gZArs7GB6NeI30Np52OgZAoIA3n1YmideKbCz5ZCyrdk38WqDevt1FZChZBuVWwIkFk56311nztFnyFyGc6TXJlEHmxcC1hISoc9n12EUrwowGTeAgdgVeRamcfklUnPPjC9mm2oM55zL8a8x5mJovly9HWEG"
+    token = "EAAWXJp8ZCZCyABOZCQ4ZAiyhAhs7o88ZAWcOep8HnXU5IisqMGqOdDB9CJwmuSuOo5J3fDNTIrYUouMDtxH1BO3oPrMPHQpmM3HaJtOrSITEQTkf0XjDKvj4UpPL1gtsGZAlZBbTd5nBDBWofjJPzWxGSkbLbD7pwq2ZCwGS3yXpwZBhfP0kaAvQD3cvZB2FbgttAf7ShN5m0dLPtyp8OQysXbPdsvLgZDZD"
     headers = {
         "Content-Type" : "application/json",
         "Authorization": "Bearer "+token
