@@ -247,7 +247,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==1)):
-        app.logger.debug("In Step 1")
+        app.logger.debug("In Step 1 List")
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
@@ -262,7 +262,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "text": chatbotFlowMessages[1][2]
                 },
                 "action":{
-                    "buttons": chatbotFlowMessages[1][1],
+                    "button": chatbotFlowMessages[1][1],
                     "sections":[
                         {
                             "title": chatbotFlowMessages[1][2],
