@@ -264,7 +264,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                     "button": chatbotFlowMessages[1][1],
                     "sections":[
                         {
-                            "title": chatbotFlowMessages[1][2],
+                            "title": "titulo",
                             "rows":[
                                 {
                                     "id":"btncompra",
@@ -275,20 +275,6 @@ def enviar_mensajes_whatsapp(texto, numero):
                                     "id":"btnvender",
                                     "title" : "Vender",
                                     "description": "Vende lo que ya no estes usando"
-                                }
-                            ]
-                        },{
-                            "title":"Distribución y Entrega",
-                            "rows":[
-                                {
-                                    "id":"btndireccion",
-                                    "title" : "Local",
-                                    "description": "Puedes visitar nuestro local."
-                                },
-                                {
-                                    "id":"btnentrega",
-                                    "title" : "Entrega",
-                                    "description": "La entrega se realiza todos los dias."
                                 }
                             ]
                         }
