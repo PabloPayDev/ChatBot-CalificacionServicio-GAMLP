@@ -275,6 +275,11 @@ def enviar_mensajes_whatsapp(texto, numero):
                                     "id": chatbotFlowMessages[1][4][0],
                                     "title" : chatbotFlowMessages[1][4][1],
                                     "description": "Vende lo que ya no estes usando"
+                                },
+                                {
+                                    "id": chatbotFlowMessages[1][5][0],
+                                    "title" : chatbotFlowMessages[1][5][1],
+                                    "description": "Vende lo que ya no estes usando"
                                 }
                             ]
                         }
