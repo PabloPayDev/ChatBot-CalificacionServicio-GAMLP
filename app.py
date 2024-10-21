@@ -192,10 +192,9 @@ def recibir_mensaje(req):
 
 def enviar_mensajes_whatsapp(texto, numero):
     global chatbotFlowMessages    
-    global flowStep    
-    texto = texto.lower()
+    global flowStep
 
-    if(("holaSimpleTest" in texto)):
+    if(("holaSimpleTest") in (texto.lower())):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -207,7 +206,7 @@ def enviar_mensajes_whatsapp(texto, numero):
                 "body": "Hola, Bienvenido"
             }
         }
-    elif(("hola" in texto)and(flowStep==0)):
+    elif(("hola" in (texto.lower()))and(flowStep==0)):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",    
@@ -306,7 +305,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
     data = json.dumps(data)
-    token = "EAAWXJp8ZCZCyABO9Ui8vJZCdb7MdwYy22V8LbhNXiLfYvRXZCXdZBnYVQO2GZCGENhDIBMj05KiiZCNi1XSZCZBlqOSB8SZAvg5rm7GCOcbcMe9qN41O7KZAQV21XPJn5TrVjZBRvfuoMi0SpCMyHZB8bki4uIEmzP2zxbvtpZA7WlzNhqpYZCTZBZAroDn7Nl2htX4X9VoVotUEVAsSgZCYz2eNt9dZBPC5sII"
+    token = "EAAWXJp8ZCZCyABO3N2LWgo7jaiOIqQgNvt2rD31Q7A0hY9cVgHOHwkGA0X7XUFkkPvyROHVQC6ZB8bBOr1MtTL4eh8D6paUyIhKQMzLo0do6WoVaVZCwa5lhgu5EJha7ZBGUZBdx8EC0ZBrJZBILuQm7wKquJGZBWffDQnJEuB0ghLmzmudYIKi08J9kYRAFOpckhL0STLiuNJZAs8eZAlDafGKNBE2"
     headers = {
         "Content-Type" : "application/json",
         "Authorization": "Bearer "+token
