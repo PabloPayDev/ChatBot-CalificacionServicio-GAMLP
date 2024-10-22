@@ -205,6 +205,7 @@ def recibir_mensaje(req):
 def enviar_mensajes_whatsapp(texto, numero):
     global chatbotFlowMessages    
     global flowStep
+    global wrongAnswers
 
     if(("holaSimpleTest") in (texto.lower())):
         flowStep = 1
@@ -421,7 +422,6 @@ def enviar_mensajes_whatsapp(texto, numero):
         }
 
     else:
-        global wrongAnswers
         wrongAnswers += 1
 
         data = {
