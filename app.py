@@ -157,6 +157,7 @@ def verificar_token(req):
         return jsonify({'error':'Token Invalido'}),401
 
 flowStep = 0
+wrongAnswers = 0
 
 def recibir_mensaje(req):
     try:
@@ -170,7 +171,6 @@ def recibir_mensaje(req):
         if(objeto_mensaje):
             messages = objeto_mensaje[0]
             if("type" in messages):
-                app.logger.debug('IN RecMen')
                 tipo = messages["type"]
                 addMessageLog(json.dumps(messages))
 
@@ -179,12 +179,14 @@ def recibir_mensaje(req):
                     if(tipo_interactivo == "button_reply"):
                         text = messages["interactive"]["button_reply"]["id"]
                         numero = messages["from"]
+
                         enviar_mensajes_whatsapp(text, numero)
+
                     if(tipo_interactivo == "list_reply"):
                         text = messages["interactive"]["list_reply"]["id"]
                         numero = messages["from"]
-                        enviar_mensajes_whatsapp(text, numero)
 
+                        enviar_mensajes_whatsapp(text, numero)
 
                 if("text" in messages):
                     text = messages["text"]["body"]
@@ -195,7 +197,9 @@ def recibir_mensaje(req):
                     addMessageLog(json.dumps(messages))
 
         return jsonify({'message':'EVENT RECEIVED'})
+
     except Exception as e:
+        app.logger.debug('Error: Recibir mensaje')
         return jsonify({'message':'EVENT RECEIVED'})
 
 def enviar_mensajes_whatsapp(texto, numero):
@@ -243,7 +247,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
         
-    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==1)):
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==1)and(wrongAnswers<3)):
         flowStep = 2
         data ={
             "messaging_product": "whatsapp",
@@ -295,7 +299,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
 
-    elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==2)):
+    elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==2)and(wrongAnswers<3)):
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
@@ -338,7 +342,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
         
-    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==2)):
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==2)and(wrongAnswers<3)):
         flowStep = 3
         data ={
             "messaging_product": "whatsapp",
@@ -390,7 +394,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
 
-    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==3)):
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==3)and(wrongAnswers<3)):
         flowStep = 4
         data = {
             "messaging_product": "whatsapp",    
@@ -403,7 +407,7 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
 
-    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==4)):
+    elif((flowStep==4)or(wrongAnswers==3)):
         flowStep = 0
         data = {
             "messaging_product": "whatsapp",    
@@ -417,6 +421,9 @@ def enviar_mensajes_whatsapp(texto, numero):
         }
 
     else:
+        global wrongAnswers
+        wrongAnswers += 1
+
         data = {
             "messaging_product": "whatsapp",    
             "recipient_type": "individual",
