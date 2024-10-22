@@ -410,6 +410,7 @@ def enviar_mensajes_whatsapp(texto, numero):
 
     elif((flowStep==4)or(wrongAnswers==3)):
         flowStep = 0
+        wrongAnswers = 0
         data = {
             "messaging_product": "whatsapp",    
             "recipient_type": "individual",
