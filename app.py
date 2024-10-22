@@ -88,6 +88,7 @@ flow5 = [
 flowInvalid = [
     "Su respuesta no es valida, porfavor ingrese lo que se especifica."
 ]
+
 chatbotFlowMessages = [
     flow1,
     flow2,
@@ -295,7 +296,6 @@ def enviar_mensajes_whatsapp(texto, numero):
         }
 
     elif((check_text_in_flow(texto, chatbotFlowMessages, 0))and(flowStep==2)):
-        app.logger.debug("In Step 1")
         flowStep = 2
         data = {
             "messaging_product": "whatsapp",    
@@ -390,10 +390,8 @@ def enviar_mensajes_whatsapp(texto, numero):
             }
         }
 
-    else:
-        app.logger.debug(texto)
-        app.logger.debug((check_text_in_flow(texto, chatbotFlowMessages, 0)))
-        app.logger.debug(flowStep)
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==3)):
+        flowStep = 4
         data = {
             "messaging_product": "whatsapp",    
             "recipient_type": "individual",
@@ -401,7 +399,32 @@ def enviar_mensajes_whatsapp(texto, numero):
             "type": "text",
             "text": {
                 "preview_url": False,
-                "body": "Continua conversacion"
+                "body": chatbotFlowMessages[3][0]
+            }
+        }
+
+    elif((check_text_in_flow(texto, chatbotFlowMessages, flowStep-1))and(flowStep==4)):
+        flowStep = 0
+        data = {
+            "messaging_product": "whatsapp",    
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": chatbotFlowMessages[4][0]
+            }
+        }
+
+    else:
+        data = {
+            "messaging_product": "whatsapp",    
+            "recipient_type": "individual",
+            "to": numero,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": chatbotFlowMessages[5][0]
             }
         }
     data = json.dumps(data)
