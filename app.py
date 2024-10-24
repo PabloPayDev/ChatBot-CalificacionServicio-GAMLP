@@ -210,14 +210,14 @@ def enviar_mensajes_whatsapp(texto, numero):
     if(("holaSimpleTest") in (texto.lower())):
         flowStep = 1
         data = {
-            "messaging_product": "whatsapp",    
+            "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": numero,
-            "type": "text",
-            "text": {
-                "preview_url": False,
-                "body": "Hola, Bienvenido"
-            }
+            "type": "image",
+            "image": {
+                "link": "https://png.pngtree.com/png-vector/20221217/ourmid/pngtree-example-sample-grungy-stamp-vector-png-image_15560590.png"
+            },
+            "caption": "Este es el texto que aparecerá debajo de la imagen"
         }
     elif(("hola" in (texto.lower()))and(flowStep==0)):
         flowStep = 1
