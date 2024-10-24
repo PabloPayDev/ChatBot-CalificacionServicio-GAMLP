@@ -207,7 +207,7 @@ def enviar_mensajes_whatsapp(texto, numero):
     global flowStep
     global wrongAnswers
 
-    if(("holaSimpleTest") in (texto.lower())):
+    if(("test") in (texto.lower())):
         flowStep = 1
         data = {
             "messaging_product": "whatsapp",
